@@ -1,7 +1,16 @@
 import 'package:firebase/ui/pages.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await FirebaseAppCheck.instance.activate(
+    webProvider: ReCaptchaV3Provider('EA054BFD-004F-4C7A-A84E-693F705AD3D3'),
+    androidProvider: AndroidProvider.playIntegrity,
+  );
+  await FirebaseAppCheck.instance.setTokenAutoRefreshEnabled(true);
   runApp(const MyApp());
 }
 
@@ -13,16 +22,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: SignInPage(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/sign-up' : (context) => SignUpPage(),
-        '/sign-in' : (context) => SignInPage(),
-        '/home' : (context) => HomePage(),
+        '/register': (context) => SignUpPage(),
+        '/login': (context) => SignInPage(),
+        '/home': (context) => HomePage(),
+        '/note': (context) => NotePage(),
+        '/profile': (context) => ProfilePage(),
+        '/change-password': (context) => ChangePassword(),
       },
     );
   }

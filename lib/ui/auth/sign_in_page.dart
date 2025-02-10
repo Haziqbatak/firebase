@@ -12,6 +12,31 @@ class _SignInPageState extends State<SignInPage> {
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final FirebaseService firebaseService = FirebaseService();
+
+  void _login() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email and Password cannot be empty'),
+        ),
+      );
+    } else {
+      final user = await firebaseService.signIn(email, password);
+      if (user != null) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Email and Password cannot be empty'),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +122,10 @@ class _SignInPageState extends State<SignInPage> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _login();
+                  Navigator.pushNamed(context, '/home');
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: colorPrimary,
                   shape: RoundedRectangleBorder(
@@ -186,7 +214,7 @@ class _SignInPageState extends State<SignInPage> {
                 children: <Widget>[
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/sign-up');
+                      Navigator.pushNamed(context, '/register');
                     },
                     child: Text(
                       hintDoesntHaveAccount,
