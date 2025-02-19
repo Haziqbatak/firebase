@@ -82,20 +82,20 @@ class _SignUpPageState extends State<SignUpPage> {
                   const SizedBox(
                     height: 50,
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      image: DecorationImage(
-                        image: AssetImage(imageGoogle),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  // Container(
+                  // //   width: MediaQuery.of(context).size.width * 0.9,
+                  // //   height: 200,
+                  // //   decoration: BoxDecoration(
+                  // //     borderRadius: BorderRadius.circular(10),
+                  // //     image: DecorationImage(
+                  // //       image: AssetImage(imageGoogle),
+                  // //       fit: BoxFit.cover,
+                  // //     ),
+                  // //   ),
+                  // // ),
+                  // // const SizedBox(
+                  //   height: 20,
+                  // ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: Text(

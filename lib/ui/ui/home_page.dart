@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     User? user = _auth.currentUser;
 
     userId = user?.uid;
-    userData = _auth.getUserData(userId! ?? '1');
+    userData = _auth.getUserData(userId! ?? '');
   }
 
   void _signOut() async {
@@ -63,9 +63,11 @@ class _HomePageState extends State<HomePage> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/home-attendance');
+                      },
                       child: Text(
-                        'attandence',
+                        'home attendance',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

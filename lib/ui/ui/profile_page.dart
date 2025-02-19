@@ -33,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
     if (!user!.emailVerified) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Email varification link has been sent"),
+          content: Text("Email verification link has been sent"),
           backgroundColor: Colors.green,
         ),
       );
