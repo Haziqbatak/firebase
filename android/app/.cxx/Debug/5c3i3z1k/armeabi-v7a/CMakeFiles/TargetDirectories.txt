@@ -1,0 +1,2 @@
+D:/vscodeIDN/flutter/firebase/android/app/.cxx/Debug/5c3i3z1k/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/vscodeIDN/flutter/firebase/android/app/.cxx/Debug/5c3i3z1k/armeabi-v7a/CMakeFiles/rebuild_cache.dir
