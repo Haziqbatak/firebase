@@ -11,6 +11,7 @@ class _SignInPageState extends State<SignInPage> {
   bool isObscureText = true;
 
   TextEditingController emailController = TextEditingController();
+  TextEditingController email2Controller = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final FirebaseService firebaseService = FirebaseService();
 
@@ -38,34 +39,106 @@ class _SignInPageState extends State<SignInPage> {
     }
   }
 
+  void _forgotPassword() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Cancel"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  final email = email2Controller.text.trim();
+                  if (email.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Email can't be empty."),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+
+                  try {
+                    await firebaseService.forgotPassword(email);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            "Reset password link has been sent to your email."),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    email2Controller.clear();
+                    Navigator.pop(context);
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(e.toString()),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+                },
+                child: const Text("Send"),
+              ),
+            ],
+            title: const Text(
+              "Forgot Password",
+              style: TextStyle(
+                fontSize: 14,
+              ),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: email2Controller,
+                  decoration: InputDecoration(
+                    hintText: hintEmail,
+                    prefixIcon: const Icon(Icons.email),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.done,
+                ),
+              ],
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Center(
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.amber,
-                borderRadius: BorderRadius.circular(10),
-                image: DecorationImage(
-                  image: imageLogo,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Text(welcomeText, style: welcomeTextStyle),
+            Image.asset(
+              'assets/images/layer.png',
+              height: 150,
             ),
             SizedBox(height: 10),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: Text(subWelcomeText, style: subWelcomeTextStyle),
+            //welcome text
+            const SizedBox(
+              child: Text(
+                "Welcome Back",
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
+            const SizedBox(height: 10),
+            //email form
+            const Text(
+              "Sign in to continue",
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
@@ -83,6 +156,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
             SizedBox(height: 10),
+            //Password Form
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: TextFormField(
@@ -109,18 +183,15 @@ class _SignInPageState extends State<SignInPage> {
                 textInputAction: TextInputAction.done,
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: GestureDetector(
-                onTap: () {
-                  print(hintForgotPassword);
-                },
-                child: Text(hintForgotPassword, textAlign: TextAlign.end),
+            //Forgot password
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: _forgotPassword,
+                child: const Text("Forgot Password"),
               ),
             ),
-            SizedBox(height: 10),
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
               child: ElevatedButton(
                 onPressed: () {
                   _login();
@@ -138,7 +209,8 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 5),
+            //Other Options Text
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Text(
@@ -148,8 +220,8 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
             SizedBox(height: 10),
+            //Google or Facebook
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -207,6 +279,7 @@ class _SignInPageState extends State<SignInPage> {
               ),
             ),
             SizedBox(height: 10),
+            //Register
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,
               child: Row(

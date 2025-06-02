@@ -1,4 +1,5 @@
 import 'package:firebase/ui/pages.dart';
+import 'package:firebase/ui/ui/attendance/attendance/attendance_page.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/attendance': (context) => AttendancePage(),
         '/leave': (context) => LeavePage(),
         '/history': (context) => HistoryPage(),
+        '/main-page': (context) => HomeAttendancePage()
       },
     );
   }

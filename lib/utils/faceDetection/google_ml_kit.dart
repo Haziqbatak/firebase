@@ -1,7 +1,7 @@
 import 'package:firebase/utils/faceDetection/vision.dart';
 
-class GoogleMlKit {
-  GoogleMlKit._();
+class GoogleMLKit {
+  GoogleMLKit._();
 
   static final Vision vision = Vision.instance;
   
